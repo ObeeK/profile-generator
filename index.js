@@ -4,6 +4,7 @@ const fs = require("fs");
 const Intern = require('./lib/Intern')
 const Engineer = require('./lib/Engineer')
 const Manager = require('./lib/Manager')
+const generatePage = require('./src/template.js')
 
 // prompt for engineer's info, then create new instance of engineer with that info
 
@@ -51,6 +52,48 @@ const engineerFunction = function () {  //copy all of this for intern
         .then(response => {
             const createEngineer = new Engineer(response.name, response.id, response.email, response.gitHub);
             employeeArr.push(createEngineer);
+            createTeam()
+        })
+
+};
+
+const internFunction = function () {  
+
+    inquirer
+        .prompt([
+            {
+                type: 'input',
+                name: 'name',
+                message: 'What is their name?'
+            },
+            {
+                type: 'input',
+                name: 'id',
+                message: 'What is their ID?',
+                validate: answer => {
+                    const checker = employeeArr.find(employee => { employee.id == answer })
+                    if (!checker) {
+                        return true;
+                    } else {
+                        return 'This ID already exists';
+                    }
+                }
+            },
+            {
+                type: 'input',
+                name: 'email',
+                message: 'What is their email?'
+            },
+            {
+                type: 'input',
+                name: 'school',
+                message: 'What school do they attend?'
+            },
+        ])
+
+        .then(response => {
+            const createIntern = new Intern(response.name, response.id, response.email, response.school);
+            employeeArr.push(createIntern);
             createTeam()
         })
 
@@ -112,15 +155,23 @@ const createTeam = function () {
                     internFunction();
                     break;
                 case 'Finished':
+                    writePage()
                     break;
             }
         })
 }
-const menu = function () {
-    managerFunction()
-}
 
-menu()
+
+managerFunction()
+
+const writePage = function() {
+    fs.writeFile("./dist/index.html", generatePage(employeeArr), function(err) {
+        if(err) {
+            return console.log(err);
+        }
+        console.log("The HTML page has been generated!");
+    });
+}
 
 
 
@@ -142,3 +193,4 @@ menu()
 // function writeToFile(fileName, data) {
 //     fs.writeFileSync(('./dist/index.html', fileName), data)
 // }
+

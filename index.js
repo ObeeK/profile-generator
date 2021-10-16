@@ -14,7 +14,7 @@ const employeeArr = []
 //manager prompt first, then do you want to create an engineer/intern/quit
 
 //engineer inquirer prompt
-const engineerFunction = function () {
+const engineerFunction = function () {  //copy all of this for intern
 
     inquirer
         .prompt([
@@ -28,8 +28,8 @@ const engineerFunction = function () {
                 name: 'id',
                 message: 'What is your ID?',
                 validate: answer => {
-                    const checker = employeeArr.find(employee => {employee.id == answer})
-                    if (!checker){
+                    const checker = employeeArr.find(employee => { employee.id == answer })
+                    if (!checker) {
                         return true;
                     } else {
                         return 'This ID already exists';
@@ -51,8 +51,7 @@ const engineerFunction = function () {
         .then(response => {
             const createEngineer = new Engineer(response.name, response.id, response.email, response.gitHub);
             employeeArr.push(createEngineer);
-            idArr.push(response.id); // adds id to array to validate employee doesn't already exist
-
+            createTeam()
         })
 
 }
@@ -80,12 +79,12 @@ const managerFunction = function () {
                 name: 'office',
                 message: 'What is your office number?'
             },
-           
+
         ])
 
         .then(response => {
             const createManager = new Manager(response.name, response.id, response.email, response.office);
-            employeeArr.push(createEngineer);
+            employeeArr.push(createManager);
             createTeam()
         })
 }
@@ -105,7 +104,7 @@ const createTeam = function () {
 
             }
         ]).then(response => {
-            switch (response) {
+            switch (response.createEmployee) {
                 case 'Engineer':
                     engineerFunction();
                     break;
@@ -121,6 +120,7 @@ const menu = function () {
     managerFunction()
 }
 
+menu()
 
 
 

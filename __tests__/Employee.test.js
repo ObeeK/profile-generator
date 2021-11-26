@@ -21,6 +21,25 @@ test('getName function', () => {
     expect(test.getName()).toBe('Jon');
 })
 
+test('creates employee email', () => {
+    const test = new Employee('Jon', 1, 'email@email.com');
+    expect(test.email).toBe('email@email.com');
+})
+
+test('getId function', () => {
+    const test = new Employee('Jon', 1);
+    expect(test.getID()).toBe(1);
+})
+
+test('getEmail function', () => {
+    const test = new Employee('Jon', 1, "email@email.com");
+    expect(test.getEmail()).toBe('email@email.com');
+})
+
+test('getRole function', () => {
+    const test = new Employee('Jon', 1, "email");
+    expect(test.getRole()).toBe('Employee');
+})
 
 // expect(employee.name).toBe('Jon');
 //     expect(player.id).toEqual(expect.any(Number));

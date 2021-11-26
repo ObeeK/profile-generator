@@ -1,10 +1,11 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
-// const generateHTML = require('./src/template')
+const Manager = require('./lib/Manager')
 const Intern = require('./lib/Intern')
 const Engineer = require('./lib/Engineer')
-const Manager = require('./lib/Manager')
-const generatePage = require('./src/template.js')
+
+const generatePage = require('./src/template')
+
 
 // prompt for engineer's info, then create new instance of engineer with that info
 
@@ -22,12 +23,12 @@ const engineerFunction = function () {  //copy all of this for intern
             {
                 type: 'input',
                 name: 'name',
-                message: 'What is your name?'
+                message: 'What is their name?'
             },
             {
                 type: 'input',
                 name: 'id',
-                message: 'What is your ID?',
+                message: 'What is their ID?',
                 validate: answer => {
                     const checker = employeeArr.find(employee => { employee.id == answer })
                     if (!checker) {
@@ -40,12 +41,12 @@ const engineerFunction = function () {  //copy all of this for intern
             {
                 type: 'input',
                 name: 'email',
-                message: 'What is your email?'
+                message: 'What is their email?'
             },
             {
                 type: 'input',
                 name: 'gitHub',
-                message: 'What is your GitHub?'
+                message: 'What is their GitHub?'
             },
         ])
 
@@ -127,6 +128,9 @@ const managerFunction = function () {
 
         .then(response => {
             const createManager = new Manager(response.name, response.id, response.email, response.office);
+            // let x = Object.assign({}, createManager);
+            // x.role = 'Manager';
+            // employeeArr.push(x);
             employeeArr.push(createManager);
             createTeam()
         })

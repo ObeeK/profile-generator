@@ -1,0 +1,8 @@
+.jumbo {
+    display: flex;
+    background-color: rgb(150, 31, 56);
+    height: 100px;
+    color: white;
+    align-items: center;
+    justify-content: center;
+}

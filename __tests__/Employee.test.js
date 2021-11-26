@@ -1,4 +1,3 @@
-const { tsImportEqualsDeclaration } = require("@babel/types");
 const { expect } = require("@jest/globals");
 const Employee = require("../lib/Employee")
 
